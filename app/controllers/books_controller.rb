@@ -15,6 +15,18 @@ class BooksController < ApplicationController
     end
   end
 
+  def update
+    book = Book.find(params[:id])
+    book[:title] = book_params[:title]
+    book.save
+    render json: book
+  end
+
+  def destroy
+    book = Book.find(params[:id])
+    book.destroy
+    head :no_content
+  end
   private
 
   def book_params
