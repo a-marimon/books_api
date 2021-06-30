@@ -1,10 +1,20 @@
 class BooksController < ApplicationController
   def index
-    render json: Book.all
+    books = Book.all
+    if params[:title] != nil
+      books = books.where("title like ?", "%#{params[:title]}%".titleize)
+    end
+
+    if params[:author] != nil
+      books = books.where("author like ?", "%#{params[:author]}%".titleize)
+    end
+
+    render json: books
   end
 
   def show
     book = Book.find(params[:id])
+
     render json: book, status: :ok
   end
 
